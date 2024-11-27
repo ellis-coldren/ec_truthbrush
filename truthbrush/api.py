@@ -371,14 +371,14 @@ class Api:
         Returns a list of posts in reverse chronological order,
             or an empty list if not found.
         """
-        logger.info("pulling")
+        logger.warning("pulling")
         params = {}
         user_id = self.lookup(username)["id"]
         page_counter = 0
         keep_going = True
         while keep_going:
             try:
-                url = f"/v1/accounts/{user_id}/statuses?limit={50}"
+                url = f"/v1/accounts/{user_id}/statuses?limit=50"
                 if pinned:
                     url += "?pinned=true&with_muted=true"
                 elif not replies:
