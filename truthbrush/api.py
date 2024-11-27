@@ -107,6 +107,7 @@ class Api:
                     "User-Agent": USER_AGENT,
                 },
             )
+            
         except curl_cffi.curl.CurlError as e:
             logger.error(f"Curl error: {e}")
 
@@ -370,14 +371,14 @@ class Api:
         Returns a list of posts in reverse chronological order,
             or an empty list if not found.
         """
-
+        logger.info("pulling")
         params = {}
         user_id = self.lookup(username)["id"]
         page_counter = 0
         keep_going = True
         while keep_going:
             try:
-                url = f"/v1/accounts/{user_id}/statuses"
+                url = f"/v1/accounts/{user_id}/statuses?limit={50}"
                 if pinned:
                     url += "?pinned=true&with_muted=true"
                 elif not replies:
